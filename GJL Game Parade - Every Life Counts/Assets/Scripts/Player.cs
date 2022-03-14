@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
 
     readonly Vector3 startPos = new Vector3(0.75f,9.75f,-5);
-    readonly Vector3 jump = new Vector3(0,1);
+    readonly Vector3 jumpVelocity = new Vector3(0,2);
     Rigidbody2D ownRigidBody;
 
     // Start is called before the first frame update
@@ -18,11 +18,11 @@ public class Player : MonoBehaviour
         ownRigidBody.gravityScale = 0.1f;
     }
 
-    // Update is called once per frame
+    // FixedUpdate is called once per set time interval
     void FixedUpdate()
     {
         if(Input.GetKeyDown("space") == true) {
-            transform.position += jump;
+            ownRigidBody.velocity = jumpVelocity;
         }
     }
 
