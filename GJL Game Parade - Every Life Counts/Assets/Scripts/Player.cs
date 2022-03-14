@@ -7,6 +7,8 @@ public delegate void Notify();
 public class Player : MonoBehaviour
 {
 
+    public GameObject deadPlayerBlock;
+
     readonly Vector2 jumpVelocity = new Vector2(0,5);
     readonly Vector2 horizontalAcceleration = new Vector2(0.15f, 0);
     readonly float horizontalSpeedcap = 5f;
@@ -62,7 +64,7 @@ public class Player : MonoBehaviour
 
     void TryJump()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 0.3f, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 0.3f, LayerMask.GetMask("Ground", "Deaths"));
         if(hit.collider != null)
         {
             ownRigidBody.velocity += jumpVelocity;
@@ -89,7 +91,16 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
+        SpawnDeadPlayerBlock();
         OnDeath();
+    }
+
+    void SpawnDeadPlayerBlock()
+    {
+        if (transform.position != GetComponent<ResetOnDeath>().startingPosition)
+        {
+            Instantiate(deadPlayerBlock, transform.position, Quaternion.identity);
+        }
     }
 
     protected virtual void OnDeath()

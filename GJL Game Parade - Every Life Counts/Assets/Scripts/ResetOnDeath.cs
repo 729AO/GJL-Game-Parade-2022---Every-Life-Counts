@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResetOnDeath : MonoBehaviour
 {
 
-    Vector3 startingPosition;
+    public Vector3 startingPosition;
 
     private void Start()
     {
