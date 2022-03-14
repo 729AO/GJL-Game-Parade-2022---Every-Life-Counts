@@ -51,6 +51,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+
+        if (collider.gameObject.layer == 8)
+        {
+            Die();
+        }
+    }
+
     void TryJump()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 0.3f, LayerMask.GetMask("Ground"));
