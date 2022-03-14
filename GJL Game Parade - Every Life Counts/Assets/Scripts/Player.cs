@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision col) {
 
-        ownRigidBody.gravityScale = 0;
+        ownRigidBody.velocity = Vector3.zero;
 
     }
 
