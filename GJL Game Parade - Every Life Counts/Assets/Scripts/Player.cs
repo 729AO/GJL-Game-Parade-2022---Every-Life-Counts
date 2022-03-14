@@ -26,8 +26,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision col) {}
-        ownRigidBody.velocity = Vector3.zero;
+    void OnCollisionEnter(Collision col) {
+        ownRigidBody.velocity = Vector2.zero;
     }
-
 }
