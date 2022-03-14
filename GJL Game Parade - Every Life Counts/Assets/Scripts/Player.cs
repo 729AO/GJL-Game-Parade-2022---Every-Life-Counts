@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void Notify();
+
 public class Player : MonoBehaviour
 {
 
-    readonly Vector3 startPos = new Vector3(0.75f,9.75f,-5);
     readonly Vector2 jumpVelocity = new Vector2(0,5);
     readonly Vector2 horizontalAcceleration = new Vector2(0.15f, 0);
     readonly float horizontalSpeedcap = 5f;
     Rigidbody2D ownRigidBody;
 
+    public event Notify Dead;
+
+    public Player() { }
 
     // Start is called before the first frame update
     void Start()
     {
-        Transform parentTransform = GameObject.Find("RefFrame").GetComponent<Transform>();
-        transform.position = parentTransform.position + startPos;
         ownRigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -26,6 +28,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown("space")) {
             TryJump();
         }
+
+        if (Input.GetKeyDown("p"))
+        {
+            Die();
+        }
+
     }
 
     // Otherwise movement would be tied to frame rate
@@ -69,4 +77,15 @@ public class Player : MonoBehaviour
         }
         else { ownRigidBody.velocity -= horizontalAcceleration; }
     }
+
+    public void Die()
+    {
+        OnDeath();
+    }
+
+    protected virtual void OnDeath()
+    {
+        Dead?.Invoke();
+    }
+
 }
