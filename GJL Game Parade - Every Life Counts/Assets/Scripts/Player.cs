@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
-public delegate void MyAction(ItemType type);
+public delegate void MyAction(ItemType type, int id);
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     readonly float horizontalSpeedcap = 5f;
     Rigidbody2D ownRigidBody;
 
+    int spawned_blocks = 0;
     ItemType currentClothes = ItemType.solid;
 
     public event MyAction Dead;
@@ -108,13 +109,17 @@ public class Player : MonoBehaviour
     {
         if (transform.position != GetComponent<ResetOnDeath>().startingPosition)
         {
-            Instantiate(deadPlayerBlock, transform.position, transform.rotation);
+            GameObject death_block = Instantiate(deadPlayerBlock, transform.position, transform.rotation);
+            death_block.GetComponent<DeadPlayer>().ID = spawned_blocks;
+            spawned_blocks++;
         }
     }
 
     protected virtual void OnDeath()
     {
-        Dead?.Invoke(currentClothes);
+        print(currentClothes);
+        print(spawned_blocks - 1);
+        Dead?.Invoke(currentClothes, spawned_blocks - 1);
     }
 
 #endregion
