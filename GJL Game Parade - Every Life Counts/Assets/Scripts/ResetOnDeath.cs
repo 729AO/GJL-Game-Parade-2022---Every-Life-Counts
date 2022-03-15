@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Enums;
 
 public class ResetOnDeath : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class ResetOnDeath : MonoBehaviour
         startingPosition = transform.position;
 
         Player player = GameObject.Find("Player").GetComponent<Player>();
-        player.Dead += PlayerDied;
+        player.Dead += (ItemType type) => PlayerDied();
     }
 
     private void PlayerDied()

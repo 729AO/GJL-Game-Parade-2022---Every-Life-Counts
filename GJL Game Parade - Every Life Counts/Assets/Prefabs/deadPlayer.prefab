@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 449339438525549439}
   - component: {fileID: 5703052739629440863}
   - component: {fileID: 6339471321450062924}
+  - component: {fileID: 2887572694014504908}
   m_Layer: 9
   m_Name: deadPlayer
   m_TagString: Untagged
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de111f35bc546494f8591a7746335f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material2D: {fileID: 6200000, guid: d70b26de0475a4d2eacadebfdd21b959, type: 2}
 --- !u!50 &6339471321450062924
 Rigidbody2D:
   serializedVersion: 4
@@ -117,3 +119,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &2887572694014504908
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502381548717474638}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 4fbbfaa2ea1664381afca18ecd950e2c, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

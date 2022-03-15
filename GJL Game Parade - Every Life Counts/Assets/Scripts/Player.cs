@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public delegate void Notify();
+using Enums;
+public delegate void MyAction(ItemType type);
 
 public class Player : MonoBehaviour
 {
@@ -14,7 +14,9 @@ public class Player : MonoBehaviour
     readonly float horizontalSpeedcap = 5f;
     Rigidbody2D ownRigidBody;
 
-    public event Notify Dead;
+    ItemType currentClothes = ItemType.solid;
+
+    public event MyAction Dead;
 
     public Player() { }
 
@@ -56,15 +58,21 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
 
-        if (collider.gameObject.layer == 8)
+        GameObject gameObj = collider.gameObject;
+        if (gameObj.layer == 8)
         {
             Die();
         }
+        if (gameObj.layer == 10)
+        {
+            PickupItem(gameObj);
+        }
+
     }
 
     void TryJump()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 0.3f, LayerMask.GetMask("Ground", "Deaths"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, LayerMask.GetMask("Ground", "Deaths"));
         if(hit.collider != null)
         {
             ownRigidBody.velocity += jumpVelocity;
@@ -89,6 +97,7 @@ public class Player : MonoBehaviour
         else { ownRigidBody.velocity -= horizontalAcceleration; }
     }
 
+#region death
     public void Die()
     {
         SpawnDeadPlayerBlock();
@@ -99,13 +108,26 @@ public class Player : MonoBehaviour
     {
         if (transform.position != GetComponent<ResetOnDeath>().startingPosition)
         {
-            Instantiate(deadPlayerBlock, transform.position, Quaternion.identity);
+            Instantiate(deadPlayerBlock, transform.position, transform.rotation);
         }
     }
 
     protected virtual void OnDeath()
     {
-        Dead?.Invoke();
+        Dead?.Invoke(currentClothes);
     }
+
+#endregion
+
+#region items
+
+    void PickupItem(GameObject gameObj) {
+
+        currentClothes = gameObj.GetComponent<Item>().type;
+        Destroy(gameObj);
+
+    }
+
+#endregion
 
 }
