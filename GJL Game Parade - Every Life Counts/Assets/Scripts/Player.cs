@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     Rigidbody2D ownRigidBody;
 
     int spawned_blocks = 0;
-    ItemType currentClothes = ItemType.solid;
+    public ItemType currentClothes = ItemType.solid;
 
     public event MyAction Dead;
 
@@ -30,15 +30,11 @@ public class Player : MonoBehaviour
     // FixedUpdate makes the cube not jump good
     void Update()
     {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
         if (Input.GetKeyDown("space")) {
             TryJump();
         }
-
-        if (Input.GetKeyDown("p"))
-        {
-            Die();
-        }
-
     }
 
     // Otherwise movement would be tied to frame rate
@@ -103,6 +99,7 @@ public class Player : MonoBehaviour
     {
         SpawnDeadPlayerBlock();
         OnDeath();
+        currentClothes = ItemType.solid;
     }
 
     void SpawnDeadPlayerBlock()
@@ -117,8 +114,6 @@ public class Player : MonoBehaviour
 
     protected virtual void OnDeath()
     {
-        print(currentClothes);
-        print(spawned_blocks - 1);
         Dead?.Invoke(currentClothes, spawned_blocks - 1);
     }
 

@@ -7,10 +7,13 @@ public class DeadPlayer : MonoBehaviour
 {
 
     public int ID;
+    Player player;
 
-    void Awake() {
-        Player player = GameObject.Find("Player").GetComponent<Player>();        
+    void Awake() {   
+        player = GameObject.Find("Player").GetComponent<Player>();
         player.Dead += (ItemType type, int id) => SetParameters(type, id);
+
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     void SetParameters(ItemType type, int target_id) {
@@ -36,7 +39,6 @@ public class DeadPlayer : MonoBehaviour
                 break;
 
         }
-
     }
 
 }
