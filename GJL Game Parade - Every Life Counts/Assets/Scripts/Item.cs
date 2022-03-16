@@ -5,18 +5,14 @@ using Enums;
 
 public class Item : MonoBehaviour
 {
-    
     public ItemType type;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        if (gameObject.name == "lvl1Item")
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(2, 0);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

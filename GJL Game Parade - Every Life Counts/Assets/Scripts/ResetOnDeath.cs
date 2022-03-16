@@ -7,22 +7,27 @@ public class ResetOnDeath : MonoBehaviour
 {
 
     public Vector3 startingPosition;
+    Player player;
 
     private void Start()
     {
         startingPosition = transform.position;
 
-        Player player = GameObject.Find("Player").GetComponent<Player>();
+        player = GameObject.Find("Player").GetComponent<Player>();
         player.Dead += (int id, ItemType type) => PlayerDied();
     }
 
     private void PlayerDied()
     {
-        transform.position = startingPosition;
-        if(GetComponent<Rigidbody2D>() != null)
+        try
         {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            transform.position = startingPosition;
+            if (GetComponent<Rigidbody2D>() != null)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
         }
+        catch (UnityEngine.MissingReferenceException)
+        { return; }
     }
-
 }
