@@ -39,6 +39,34 @@ public class DeadPlayer : MonoBehaviour
                 break;
 
         }
+
+        CheckIfOnButton();
+    }
+
+    void CheckIfOnButton() {
+
+        var left_side = transform.position - new Vector3(0.375f, 0);
+        var right_side = transform.position - new Vector3(0.375f, 0);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.4f, LayerMask.GetMask("Buttons"));
+        RaycastHit2D hit_left = Physics2D.Raycast(left_side, Vector2.down, 0.4f, LayerMask.GetMask("Buttons"));
+        RaycastHit2D hit_right = Physics2D.Raycast(right_side, Vector2.down, 0.4f, LayerMask.GetMask("Buttons"));
+
+        if (hit.collider != null) {
+
+            if (hit.collider.gameObject.GetComponent<Button>() != null) {
+                player.PressButton(hit.collider.gameObject.GetComponent<Button>().buttonNum);
+
+            } else if (hit_left.collider.gameObject.GetComponent<Button>() != null) {
+                player.PressButton(hit_left.collider.gameObject.GetComponent<Button>().buttonNum);
+
+            } else if (hit_right.collider.gameObject.GetComponent<Button>() != null) {
+                player.PressButton(hit_right.collider.gameObject.GetComponent<Button>().buttonNum);
+            }
+
+        }
+
+
     }
 
 }

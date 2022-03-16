@@ -8,7 +8,7 @@ public class Button : MonoBehaviour
     
     public int buttonNum;
     Vector3 pressMotion = new Vector2(0, 0.2f);
-
+    
 
     void Awake()
     {
@@ -20,6 +20,7 @@ public class Button : MonoBehaviour
 
     void GetPressed(int id) {
 
+        
         if (buttonNum == id) {
             transform.position -= pressMotion;
         }
@@ -31,6 +32,7 @@ public class Button : MonoBehaviour
         if (buttonNum == id) {
             transform.position += pressMotion;
         }
-    } 
+
+    }
 
 }

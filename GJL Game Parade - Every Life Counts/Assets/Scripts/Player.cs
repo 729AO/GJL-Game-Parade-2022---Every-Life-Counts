@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public event MyAction Dead;
     public event MyAction ButtonPressed;
     public event MyAction ButtonUnpressed;
+    int numObjsButtonIsPressedBy = 0;
 
     public Player() { }
 
@@ -60,6 +61,7 @@ public class Player : MonoBehaviour
 
     }
 
+#region triggers and button stuff
     void OnTriggerEnter2D(Collider2D collider)
     {
 
@@ -74,7 +76,7 @@ public class Player : MonoBehaviour
         }
         if (gameObj.layer == 11)
         {
-            ButtonPressed?.Invoke(gameObj.GetComponent<Button>().buttonNum);
+            PressButton(gameObj.GetComponent<Button>().buttonNum);
         }
 
     }
@@ -84,11 +86,33 @@ public class Player : MonoBehaviour
         GameObject gameObj = collider.gameObject;
         if (gameObj.layer == 11)
         {
-            ButtonUnpressed?.Invoke(gameObj.GetComponent<Button>().buttonNum);
+            UnpressButton(gameObj.GetComponent<Button>().buttonNum);
         }
 
     }
 
+    public void PressButton(int buttonNum) {
+
+        if(numObjsButtonIsPressedBy == 0) {
+            ButtonPressed?.Invoke(buttonNum);
+        }
+        numObjsButtonIsPressedBy++;
+
+    }
+
+    public void UnpressButton(int buttonNum) {
+
+        if(numObjsButtonIsPressedBy <= 0) Debug.Log("whelp, you've unpressed the unpressed button");
+        if(numObjsButtonIsPressedBy == 1) {
+            ButtonUnpressed?.Invoke(buttonNum);
+        }
+        numObjsButtonIsPressedBy--;
+        
+    }
+
+#endregion
+
+#region movement
     void TryJump()
     {
 
@@ -135,6 +159,8 @@ public class Player : MonoBehaviour
             ownRigidBody.velocity = new Vector2(ownRigidBody.velocity.x, -vertSpeedcap);
         }
     }
+
+#endregion
 
 #region death
     public void Die()
