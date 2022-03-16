@@ -11,7 +11,7 @@ public class DeadPlayer : MonoBehaviour
 
     void Awake() {   
         player = GameObject.Find("Player").GetComponent<Player>();
-        player.Dead += (ItemType type, int id) => SetParameters(type, id);
+        player.Dead += (int id, ItemType type) => SetParameters(type, id);
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }

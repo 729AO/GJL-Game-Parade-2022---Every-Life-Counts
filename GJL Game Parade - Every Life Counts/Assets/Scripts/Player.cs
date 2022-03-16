@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
-public delegate void MyAction(ItemType type, int id);
+public delegate void MyAction(int id, ItemType type = ItemType.unspecified);
 
 public class Player : MonoBehaviour
 {
@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     public ItemType currentClothes = ItemType.solid;
 
     public event MyAction Dead;
+    public event MyAction ButtonPressed;
+    public event MyAction ButtonUnpressed;
 
     public Player() { }
 
@@ -64,12 +66,25 @@ public class Player : MonoBehaviour
         GameObject gameObj = collider.gameObject;
         if (gameObj.layer == 8)
         {
-            print("uhhh what");
             Die();
         }
         if (gameObj.layer == 10)
         {
             PickupItem(gameObj);
+        }
+        if (gameObj.layer == 11)
+        {
+            ButtonPressed?.Invoke(gameObj.GetComponent<Button>().buttonNum);
+        }
+
+    }
+
+    void OnTriggerExit2D(Collider2D collider) {
+
+        GameObject gameObj = collider.gameObject;
+        if (gameObj.layer == 11)
+        {
+            ButtonUnpressed?.Invoke(gameObj.GetComponent<Button>().buttonNum);
         }
 
     }
@@ -141,7 +156,7 @@ public class Player : MonoBehaviour
 
     protected virtual void OnDeath()
     {
-        Dead?.Invoke(currentClothes, spawned_blocks - 1);
+        Dead?.Invoke(spawned_blocks - 1, currentClothes);
     }
 
 #endregion

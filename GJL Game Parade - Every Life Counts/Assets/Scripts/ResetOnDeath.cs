@@ -13,7 +13,7 @@ public class ResetOnDeath : MonoBehaviour
         startingPosition = transform.position;
 
         Player player = GameObject.Find("Player").GetComponent<Player>();
-        player.Dead += (ItemType type, int id) => PlayerDied();
+        player.Dead += (int id, ItemType type) => PlayerDied();
     }
 
     private void PlayerDied()
