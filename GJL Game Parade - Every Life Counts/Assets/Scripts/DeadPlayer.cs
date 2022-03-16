@@ -18,7 +18,17 @@ public class DeadPlayer : MonoBehaviour
 
     void SetParameters(ItemType type, int target_id) {
 
-        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        BoxCollider2D collider;
+
+        try
+        {
+            collider = GetComponent<BoxCollider2D>();
+        }
+        catch (MissingReferenceException)
+        {
+            return;
+        }
+        
 
         if (target_id != ID)
         {

@@ -4,6 +4,7 @@ using UnityEngine;
 using Enums;
 
 public delegate void MyAction(int id, ItemType type = ItemType.unspecified);
+public delegate void RestartAction();
 
 public class Player : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
     public event MyAction Dead;
     public event MyAction ButtonPressed;
     public event MyAction ButtonUnpressed;
+
+    public event RestartAction Restart;
     int numObjsButtonIsPressedBy = 0;
 
     public Player() { }
@@ -42,8 +45,12 @@ public class Player : MonoBehaviour
         }
         CheckVertSpeed(verticalSpeedcap);
         
+        if (Input.GetKeyDown("backspace"))
+        {
+            OnRestart();
+        }
     }
-
+    
     // Otherwise movement would be tied to frame rate
     void FixedUpdate()
     {
@@ -56,10 +63,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey("a"))
         {
             MoveLeft();
-        }
-        
-        
-
+        }  
     }
 
 #region triggers and button stuff
@@ -161,12 +165,15 @@ public class Player : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
-#region death
-    public void Die()
+    #region death
+    public void Die(bool restart = false)
     {
-        SpawnDeadPlayerBlock();
+        if (!restart)
+        {
+            SpawnDeadPlayerBlock();
+        }
         OnDeath();
         currentClothes = ItemType.solid;
     }
@@ -184,6 +191,11 @@ public class Player : MonoBehaviour
     protected virtual void OnDeath()
     {
         Dead?.Invoke(spawned_blocks - 1, currentClothes);
+    }
+
+    protected virtual void OnRestart()
+    {
+        Restart?.Invoke();
     }
 
 #endregion
