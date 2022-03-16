@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     readonly Vector2 jumpVelocity = new Vector2(0,5);
     readonly Vector2 horizontalAcceleration = new Vector2(0.15f, 0);
     readonly float horizontalSpeedcap = 5f;
+    readonly float verticalSpeedcap = 8f;
     Rigidbody2D ownRigidBody;
 
     int spawned_blocks = 0;
@@ -30,8 +31,6 @@ public class Player : MonoBehaviour
     // FixedUpdate makes the cube not jump good
     void Update()
     {
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-
         if (Input.GetKeyDown("space")) {
             TryJump();
         }
@@ -73,6 +72,14 @@ public class Player : MonoBehaviour
         if(hit.collider != null)
         {
             ownRigidBody.velocity += jumpVelocity;
+            if(ownRigidBody.velocity.y > verticalSpeedcap)
+            {
+                ownRigidBody.velocity.Set(ownRigidBody.velocity.x, verticalSpeedcap);
+            }
+            else if (ownRigidBody.velocity.y < -verticalSpeedcap)
+            {
+                ownRigidBody.velocity.Set(ownRigidBody.velocity.x, -verticalSpeedcap);
+            }
         }
     }
 
