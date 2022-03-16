@@ -205,7 +205,7 @@ public class Player : MonoBehaviour
     void PickupItem(GameObject gameObj) {
 
         currentClothes = gameObj.GetComponent<Item>().type;
-        Destroy(gameObj);
+        gameObj.transform.position = new Vector3(-500,-500);
 
     }
 
