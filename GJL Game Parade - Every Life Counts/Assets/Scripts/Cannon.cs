@@ -82,7 +82,7 @@ public class Cannon : MonoBehaviour
 
     void FireProjectile()
     {
-        GameObject proj = Instantiate(projectile, transform.position, transform.rotation);
+        GameObject proj = Instantiate(projectile, transform.position + (transform.up * 0.5f), transform.rotation);
         proj.GetComponent<Rigidbody2D>().velocity = transform.up * projectile_speed;
     }
 }

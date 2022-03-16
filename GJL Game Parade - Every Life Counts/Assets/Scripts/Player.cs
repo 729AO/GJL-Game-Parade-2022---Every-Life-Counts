@@ -9,10 +9,10 @@ public class Player : MonoBehaviour
 
     public GameObject deadPlayerBlock;
 
-    readonly Vector2 jumpVelocity = new Vector2(0,5);
-    readonly Vector2 horizontalAcceleration = new Vector2(0.15f, 0);
+    readonly Vector2 jumpVelocity = new Vector2(0,6.5f);
+    readonly Vector2 horizontalAcceleration = new Vector2(0.5f, 0);
     readonly float horizontalSpeedcap = 5f;
-    readonly float verticalSpeedcap = 8f;
+    readonly float verticalSpeedcap = 10f;
     Rigidbody2D ownRigidBody;
 
     int spawned_blocks = 0;
@@ -68,8 +68,15 @@ public class Player : MonoBehaviour
 
     void TryJump()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, LayerMask.GetMask("Ground", "Deaths"));
-        if(hit.collider != null)
+
+        var left_side = transform.position - new Vector3(0.375f, 0);
+        var right_side = transform.position - new Vector3(0.375f, 0);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.4f, LayerMask.GetMask("Ground", "Deaths"));
+        RaycastHit2D hit_left = Physics2D.Raycast(left_side, Vector2.down, 0.4f, LayerMask.GetMask("Ground", "Deaths"));
+        RaycastHit2D hit_right = Physics2D.Raycast(right_side, Vector2.down, 0.4f, LayerMask.GetMask("Ground", "Deaths"));
+
+        if (hit.collider != null || hit_left.collider != null || hit_right.collider != null)
         {
             ownRigidBody.velocity += jumpVelocity;
             if(ownRigidBody.velocity.y > verticalSpeedcap)
