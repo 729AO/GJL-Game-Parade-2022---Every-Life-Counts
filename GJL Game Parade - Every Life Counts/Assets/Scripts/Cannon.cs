@@ -74,7 +74,9 @@ public class Cannon : MonoBehaviour
 
     void TryFireProjectile()
     {
-        if(frame % frames_per_fire == 0)
+        if (frames_per_fire == 0) {
+            Debug.Log("set the frames_per_fire to something other than zero, probably also give them speed if you haven't you dingbat");
+        } else if(frame % frames_per_fire == 0)
         {
             FireProjectile();
         }

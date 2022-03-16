@@ -31,9 +31,13 @@ public class Player : MonoBehaviour
     // FixedUpdate makes the cube not jump good
     void Update()
     {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
         if (Input.GetKeyDown("space")) {
             TryJump();
         }
+        CheckVertSpeed(verticalSpeedcap);
+        
     }
 
     // Otherwise movement would be tied to frame rate
@@ -49,6 +53,9 @@ public class Player : MonoBehaviour
         {
             MoveLeft();
         }
+        
+        
+
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -80,14 +87,7 @@ public class Player : MonoBehaviour
         if (hit.collider != null || hit_left.collider != null || hit_right.collider != null)
         {
             ownRigidBody.velocity += jumpVelocity;
-            if(ownRigidBody.velocity.y > verticalSpeedcap)
-            {
-                ownRigidBody.velocity.Set(ownRigidBody.velocity.x, verticalSpeedcap);
-            }
-            else if (ownRigidBody.velocity.y < -verticalSpeedcap)
-            {
-                ownRigidBody.velocity.Set(ownRigidBody.velocity.x, -verticalSpeedcap);
-            }
+            CheckVertSpeed(jumpVelocity.y);
         }
     }
 
@@ -102,11 +102,23 @@ public class Player : MonoBehaviour
 
     void MoveLeft()
     {
-        if ((ownRigidBody.velocity - horizontalAcceleration).x <= -horizontalSpeedcap)
+        if ((ownRigidBody.velocity + horizontalAcceleration).x <= -horizontalSpeedcap)
         {
             ownRigidBody.velocity.Set(-horizontalSpeedcap, ownRigidBody.velocity.y);
         }
         else { ownRigidBody.velocity -= horizontalAcceleration; }
+    }
+
+    void CheckVertSpeed(float vertSpeedcap) {
+            
+        if(ownRigidBody.velocity.y > vertSpeedcap)
+        {
+            ownRigidBody.velocity = new Vector2(ownRigidBody.velocity.x, vertSpeedcap);
+        }
+        else if (ownRigidBody.velocity.y < -vertSpeedcap)
+        {
+            ownRigidBody.velocity = new Vector2(ownRigidBody.velocity.x, -vertSpeedcap);
+        }
     }
 
 #region death

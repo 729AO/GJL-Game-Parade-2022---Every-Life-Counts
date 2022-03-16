@@ -96,9 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d67e79d0f37e742b7d7a4970191e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 0
-  projectile_speed: 0
-  frames_per_fire: 0
+  orientation: 8
+  projectile_speed: 2
+  frames_per_fire: 50
   projectile: {fileID: 9194224915793823098, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
 --- !u!50 &3357066216639307333
 Rigidbody2D:
