@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Enums;
 
+public delegate void ResetAction();
+
 public class ResetOnDeath : MonoBehaviour
 {
 
@@ -26,8 +28,17 @@ public class ResetOnDeath : MonoBehaviour
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
+            OnReset();
         }
         catch (UnityEngine.MissingReferenceException)
         { return; }
     }
+
+    protected virtual void OnReset()
+    {
+        Reset?.Invoke();
+    }
+
+    public event ResetAction Reset;
+
 }

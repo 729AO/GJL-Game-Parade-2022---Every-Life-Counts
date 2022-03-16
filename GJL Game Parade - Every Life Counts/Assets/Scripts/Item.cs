@@ -13,6 +13,13 @@ public class Item : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(2, 0);
         }
+
+        GetComponent<ResetOnDeath>().Reset += AddStartingVelocity;
+    }
+
+    private void AddStartingVelocity()
+    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(2, 0);
     }
 
 }

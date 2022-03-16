@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
+
 public delegate void MyAction(int id, ItemType type = ItemType.unspecified);
 
 public class Player : MonoBehaviour
