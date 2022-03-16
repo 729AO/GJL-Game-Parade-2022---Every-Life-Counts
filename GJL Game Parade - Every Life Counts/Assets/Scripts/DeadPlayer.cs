@@ -32,8 +32,8 @@ public class DeadPlayer : MonoBehaviour
                 collider.sharedMaterial = mSolid;
                 break;
             case ItemType.bouncy:
-                var mBouncy = Resources.Load("Physics Materials/Bouncy");
-                collider.sharedMaterial = (PhysicsMaterial2D)mBouncy;
+                PhysicsMaterial2D mBouncy = Resources.Load<PhysicsMaterial2D>("Physics Materials/Bouncy");
+                collider.sharedMaterial = mBouncy;
                 break;
             default:
                 break;

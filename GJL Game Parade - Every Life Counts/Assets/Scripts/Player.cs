@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
         GameObject gameObj = collider.gameObject;
         if (gameObj.layer == 8)
         {
+            print("uhhh what");
             Die();
         }
         if (gameObj.layer == 10)
