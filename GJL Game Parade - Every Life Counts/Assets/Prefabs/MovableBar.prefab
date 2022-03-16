@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4875587893589628904}
   - component: {fileID: 6493963594549189910}
   - component: {fileID: 1927582051385971854}
-  - component: {fileID: 2013388397107971217}
   m_Layer: 7
   m_Name: MovableBar
   m_TagString: Floor
@@ -110,16 +109,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2013388397107971217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69203001807954789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ee8871f65c75d48ae96a533b25d906, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingPosition: {x: 0, y: 0, z: 0}
