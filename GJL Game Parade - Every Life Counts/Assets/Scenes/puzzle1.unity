@@ -1181,7 +1181,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &1829241420 stripped
+--- !u!1 &1829241419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1829241420}
+  - component: {fileID: 1829241421}
+  - component: {fileID: 1829241423}
+  - component: {fileID: 1829241422}
+  - component: {fileID: 1829241425}
+  - component: {fileID: 1829241424}
+  - component: {fileID: 1829241426}
+  m_Layer: 10
+  m_Name: lvl1Item
+  m_TagString: Consumable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1829241420
 Transform:
   m_CorrespondingSourceObject: {fileID: 8772297707168557533, guid: 0605648ca60db440097470b4f6b3ac41, type: 3}
   m_PrefabInstance: {fileID: 8772297705474583441}
