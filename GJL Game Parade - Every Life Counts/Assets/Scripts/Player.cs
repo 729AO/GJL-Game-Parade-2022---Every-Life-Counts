@@ -121,8 +121,8 @@ public class Player : MonoBehaviour
     void TryJump()
     {
 
-        var left_side = transform.position - new Vector3(0.375f, 0);
-        var right_side = transform.position - new Vector3(0.375f, 0);
+        var left_side = transform.position - new Vector3(transform.localScale.x / 2, 0);
+        var right_side = transform.position + new Vector3(transform.localScale.x / 2, 0);
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.4f, LayerMask.GetMask("Ground", "Deaths"));
         RaycastHit2D hit_left = Physics2D.Raycast(left_side, Vector2.down, 0.4f, LayerMask.GetMask("Ground", "Deaths"));

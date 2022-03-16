@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Enums;
 
-public class Cannon : MonoBehaviour
-{
+public class DeadCannon : DeadPlayer {
 
     public enum Direction
     {
@@ -87,4 +87,5 @@ public class Cannon : MonoBehaviour
         GameObject proj = Instantiate(projectile, transform.position + (transform.up * 0.5f), transform.rotation);
         proj.GetComponent<Rigidbody2D>().velocity = transform.up * projectile_speed;
     }
+
 }

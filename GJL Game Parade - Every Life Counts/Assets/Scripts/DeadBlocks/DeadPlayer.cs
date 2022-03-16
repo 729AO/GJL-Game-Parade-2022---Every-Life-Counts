@@ -8,6 +8,7 @@ public class DeadPlayer : MonoBehaviour
 
     public int ID;
     Player player;
+    public GameObject deadCannonBlock;
 
     void Awake() {   
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -44,6 +45,12 @@ public class DeadPlayer : MonoBehaviour
             case ItemType.bouncy:
                 PhysicsMaterial2D mBouncy = Resources.Load<PhysicsMaterial2D>("Physics Materials/Bouncy");
                 collider.sharedMaterial = mBouncy;
+                break;
+            case ItemType.cannon:
+                if(!(this is DeadCannon)) {
+                    Instantiate(deadCannonBlock, transform.position, deadCannonBlock.transform.rotation);
+                    Destroy(gameObject);
+                }
                 break;
             default:
                 break;

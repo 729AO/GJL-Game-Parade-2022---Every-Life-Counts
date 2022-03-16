@@ -6,7 +6,8 @@ namespace Enums {
 
         unspecified,
         solid,
-        bouncy
+        bouncy,
+        cannon
 
     }
 

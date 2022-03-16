@@ -6,12 +6,13 @@ using Enums;
 public class Item : MonoBehaviour
 {
     public ItemType type;
+    public Vector3 startVelocity;
 
     private void Start()
     {
         if (gameObject.name == "lvl1Item")
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(2, 0);
+            GetComponent<Rigidbody2D>().velocity = startVelocity;
         }
 
         GetComponent<ResetOnDeath>().Reset += AddStartingVelocity;
@@ -19,7 +20,7 @@ public class Item : MonoBehaviour
 
     private void AddStartingVelocity()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(2, 0);
+        GetComponent<Rigidbody2D>().velocity = startVelocity;
     }
 
 }
