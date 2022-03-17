@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
+using ObjectInterfaces;
 
 public delegate void MyAction(int id, ItemType type = ItemType.unspecified);
 public delegate void RestartAction();
@@ -11,9 +12,9 @@ public class Player : MonoBehaviour
 
     public GameObject deadPlayerBlock;
 
-    readonly Vector2 jumpVelocity = new Vector2(0,6.5f);
+    readonly Vector2 jumpVelocity = new Vector2(0,6.2f);
     readonly Vector2 horizontalAcceleration = new Vector2(0.5f, 0);
-    readonly float horizontalSpeedcap = 5f;
+    readonly float horizontalSpeedcap = 4.5f;
     readonly float verticalSpeedcap = 10f;
     Rigidbody2D ownRigidBody;
 
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        if (Input.GetKeyDown("space")) {
+        if (Input.GetKey("space")) {
             TryJump();
         }
         CheckVertSpeed(verticalSpeedcap);
@@ -77,7 +78,7 @@ public class Player : MonoBehaviour
         }
         if (gameObj.layer == 10)
         {
-            PickupItem(gameObj);
+            PickupItem(gameObj.GetComponent<Item>());
         }
         if (gameObj.layer == 11)
         {
@@ -202,10 +203,11 @@ public class Player : MonoBehaviour
 
 #region items
 
-    void PickupItem(GameObject gameObj) {
+    void PickupItem(IConsumable consumable) {
 
-        currentClothes = gameObj.GetComponent<Item>().type;
-        gameObj.transform.position = new Vector3(-500,-500);
+        currentClothes = consumable.consumableObject.GetComponent<Item>().type;
+        consumable.consumableObject.transform.position = new Vector2(-500,-500);
+        consumable.consumed = true;
 
     }
 

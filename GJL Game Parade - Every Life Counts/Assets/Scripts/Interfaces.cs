@@ -9,5 +9,6 @@ namespace ObjectInterfaces
         public Vector2 starting_position { get; set; }
         public Vector2 starting_velocity { get; set; }
         public GameObject consumableObject { get; set; }
+        public bool consumed { get; set; }
     }
 }

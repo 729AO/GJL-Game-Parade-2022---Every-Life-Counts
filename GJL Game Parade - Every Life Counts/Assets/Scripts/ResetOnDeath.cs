@@ -23,7 +23,10 @@ public class ResetOnDeath : MonoBehaviour
     {
         try
         {
-            transform.position = startingPosition;
+            if(gameObject.layer != 10)
+            {
+                transform.position = startingPosition;
+            }
             if (GetComponent<Rigidbody2D>() != null)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;

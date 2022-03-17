@@ -39,7 +39,7 @@ public class DeadPlayer : MonoBehaviour
         switch(type) {
 
             case ItemType.solid:
-                PhysicsMaterial2D mSolid = Resources.Load<PhysicsMaterial2D>("Physics Materials/Solid");
+                PhysicsMaterial2D mSolid = Resources.Load<PhysicsMaterial2D>("Physics Materials/Much Friction");
                 collider.sharedMaterial = mSolid;
                 break;
             case ItemType.bouncy:

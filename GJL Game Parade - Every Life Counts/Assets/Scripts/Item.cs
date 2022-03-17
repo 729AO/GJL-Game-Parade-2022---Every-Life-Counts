@@ -11,6 +11,7 @@ public class Item : MonoBehaviour, IConsumable
     public Vector2 starting_velocity { get; set; }
     public Vector2 starting_position { get; set; }
     public GameObject consumableObject { get; set; }
+    public bool consumed { get; set; }
 
     private void Start()
     {
@@ -24,11 +25,15 @@ public class Item : MonoBehaviour, IConsumable
             GetComponent<Rigidbody2D>().velocity = starting_velocity;
         }
 
-        GetComponent<ResetOnDeath>().Reset += AddStartingVelocity;
+        GetComponent<ResetOnDeath>().Reset += ResetHandler;
     }
 
-    private void AddStartingVelocity()
+    private void ResetHandler()
     {
+        if (!consumed)
+        {
+            transform.position = starting_position;
+        }
         GetComponent<Rigidbody2D>().velocity = starting_velocity;
     }
 
