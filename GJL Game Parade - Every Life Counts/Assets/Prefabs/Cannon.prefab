@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: 7
   projectile_speed: 2
-  fixed_frames_per_fire: 0
+  fixed_frames_per_fire: 70
   projectile: {fileID: 9194224915793823098, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
 --- !u!50 &3357066216639307333
 Rigidbody2D:

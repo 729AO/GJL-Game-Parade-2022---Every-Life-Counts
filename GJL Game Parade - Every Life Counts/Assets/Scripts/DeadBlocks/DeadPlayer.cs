@@ -92,17 +92,17 @@ public class DeadPlayer : MonoBehaviour
     //also if we want to make some moving death-blocks, we can use OnTriggerStay2D (with an extra bool so it doesn't continuously unpress a button, but like so this is not an expensive calculation)
     //and OnTriggerExit/Enter2D and change the rigidbody to kinematic
     //we just have to freeze the x and y positions for the normal blocks
-        void CheckIfOnButton() {
+    void CheckIfOnButton() {
 
         float side_length_x = transform.localScale.x;
         float side_length_y = transform.localScale.y;
 
         float extension = 0.38f;
 
-        var up = transform.position + new Vector3(-side_length_x / 2, side_length_y / 2);
-        var right = transform.position + new Vector3(side_length_x / 2, side_length_y / 2);
-        var down = transform.position + new Vector3(-side_length_x / 2, -side_length_y / 2);
-        var left = transform.position + new Vector3(side_length_x / 2, -side_length_y / 2);
+        var up = transform.position + new Vector3(0, side_length_y / 2);
+        var right = transform.position + new Vector3(side_length_x / 2, 0);
+        var down = transform.position + new Vector3(0, -side_length_y / 2);
+        var left = transform.position + new Vector3(-side_length_x / 2, 0);
 
         RaycastHit2D upLeft = Physics2D.Raycast(up, Vector2.left, extension, LayerMask.GetMask("Buttons"));
         RaycastHit2D upRight = Physics2D.Raycast(up, Vector2.right, extension, LayerMask.GetMask("Buttons"));

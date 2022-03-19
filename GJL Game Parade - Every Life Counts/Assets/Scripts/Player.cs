@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public GameObject deadPlayerBlock;
 
     public readonly Vector2 jumpVelocity = new Vector2(0,9f);
-    readonly Vector2 horizontalAcceleration = new Vector2(0.5f, 0);
+    readonly float horizontalAcceleration = 0.5f;
     readonly float horizontalSpeedcap = 5f;
     readonly float verticalSpeedcap = 14f;
     Rigidbody2D ownRigidBody;
@@ -92,18 +92,9 @@ public class Player : MonoBehaviour
         {
             PressButton(gameObj.GetComponent<Button>().buttonNum);
         }
-        if (gameObj.layer == 12)//this will break if this object didn't start as a normal 1x1 square
+        if (gameObj.layer == 12)
         {//this is to make you be able to step over short objects
-            Vector3 step = new Vector3(0, 0.13f);
-
-            Vector3 source = transform.position + new Vector3(0, -transform.localScale.y / 2);
-            float extension = 0.4f;
-            RaycastHit2D freeBlocksLeft = Physics2D.Raycast(source, Vector2.left, extension, LayerMask.GetMask("Free Blocks"));
-            RaycastHit2D freeBlocksRight = Physics2D.Raycast(source, Vector2.right, extension, LayerMask.GetMask("Free Blocks"));
-            if (freeBlocksLeft.collider != null && Input.GetKey(leftKey) || freeBlocksRight.collider != null && Input.GetKey(rightKey)) {
-                transform.position += step;
-            }
-            
+            StepOver(gameObj);
         }
 
     }
@@ -149,38 +140,39 @@ public class Player : MonoBehaviour
 #endregion
 
 #region movement
+
+
     void TryJump()
     {
-        var left_side = transform.position - new Vector3(transform.localScale.x / 2, 0);
-        var right_side = transform.position + new Vector3(transform.localScale.x / 2, 0);
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.4f, LayerMask.GetMask("Ground", "Deaths","Free Blocks"));
-        RaycastHit2D hit_left = Physics2D.Raycast(left_side, Vector2.down, 0.4f, LayerMask.GetMask("Ground", "Deaths","Free Blocks"));
-        RaycastHit2D hit_right = Physics2D.Raycast(right_side, Vector2.down, 0.4f, LayerMask.GetMask("Ground", "Deaths","Free Blocks"));
-
-        if (hit.collider != null || hit_left.collider != null || hit_right.collider != null)
-        {
+        if(OnBlocks("Ground", "Deaths", "Free Blocks")) {
             ownRigidBody.velocity += jumpVelocity;
             CheckVertSpeed(jumpVelocity.y);
         }
     }
 
+
     void MoveRight()
     {
-        if((ownRigidBody.velocity + horizontalAcceleration).x >= horizontalSpeedcap)
+        Vector2 tangent = SlopeTangentVec(1, "Ground", "Deaths", "Free Blocks");
+        if (tangent != Vector2.zero) {Debug.Log("hi" + tangent); ownRigidBody.velocity += tangent * horizontalAcceleration;}
+        else ownRigidBody.velocity += new Vector2(horizontalAcceleration, 0);
+
+        if(ownRigidBody.velocity.x >= horizontalSpeedcap)
         {
-            ownRigidBody.velocity.Set(horizontalSpeedcap, ownRigidBody.velocity.y);
+            ownRigidBody.velocity = new Vector2(horizontalSpeedcap, ownRigidBody.velocity.y);
         }
-        else { ownRigidBody.velocity += horizontalAcceleration; }
     }
 
     void MoveLeft()
     {
-        if ((ownRigidBody.velocity + horizontalAcceleration).x <= -horizontalSpeedcap)
+        Vector2 tangent = SlopeTangentVec(1, "Ground", "Deaths", "Free Blocks");
+        if (tangent != Vector2.zero) ownRigidBody.velocity -= tangent * horizontalAcceleration;
+        else ownRigidBody.velocity -= new Vector2(horizontalAcceleration, 0);
+
+        if(ownRigidBody.velocity.x <= -horizontalSpeedcap)
         {
-            ownRigidBody.velocity.Set(-horizontalSpeedcap, ownRigidBody.velocity.y);
+            ownRigidBody.velocity = new Vector2(-horizontalSpeedcap, ownRigidBody.velocity.y);
         }
-        else { ownRigidBody.velocity -= horizontalAcceleration; }
     }
 
     void CheckVertSpeed(float vertSpeedcap) {
@@ -193,6 +185,87 @@ public class Player : MonoBehaviour
         {
             ownRigidBody.velocity = new Vector2(ownRigidBody.velocity.x, -vertSpeedcap);
         }
+    }
+
+    private bool OnBlocks(string str1, string str2 = "", string str3 = "") {
+        var left_side = transform.position - new Vector3(transform.localScale.x / 2, 0);
+        var right_side = transform.position + new Vector3(transform.localScale.x / 2, 0);
+
+        float extension = 0.42f;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, extension, LayerMask.GetMask(str1, str2, str3));
+        RaycastHit2D hit_left = Physics2D.Raycast(left_side, Vector2.down, extension, LayerMask.GetMask(str1, str2, str3));
+        RaycastHit2D hit_right = Physics2D.Raycast(right_side, Vector2.down, extension, LayerMask.GetMask(str1, str2, str3));
+
+        if (hit.collider != null || hit_left.collider != null || hit_right.collider != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    //checks if you're standing on a slope that has a slope up to the given max slope and gives you the unit tangent vector
+    //returns Vector3.zero if there's no slope found
+    private Vector2 SlopeTangentVec(float maxSlope, string str1, string str2 = "", string str3 = "") {
+       
+        Vector2 tangent = Vector2.zero;
+       
+        var center = transform.position + new Vector3(0, -transform.localScale.y / 2);
+        var left_side = transform.position + new Vector3(-transform.localScale.x / 2, -transform.localScale.y / 2);
+        var right_side = transform.position + new Vector3(transform.localScale.x / 2, -transform.localScale.y / 2);
+
+        float corner_extension = 0.05f;
+        float extension = maxSlope * transform.localScale.x / 2 + corner_extension;
+
+        RaycastHit2D hit = Physics2D.Raycast(center, Vector2.down, extension, LayerMask.GetMask(str1, str2, str3));
+        RaycastHit2D hit_right = Physics2D.Raycast(right_side, Vector2.down, corner_extension, LayerMask.GetMask(str1, str2, str3));
+        RaycastHit2D hit_left = Physics2D.Raycast(left_side, Vector2.down, corner_extension, LayerMask.GetMask(str1, str2, str3));
+
+        //slope is positive
+        if (hit.collider != null && hit_right.collider != null && hit_left.collider == null)
+        {
+            tangent = new Vector2(transform.localScale.x / 2, hit.distance - hit_right.distance);
+        }
+        //slope is negative
+        if (hit.collider != null && hit_left.collider != null && hit_right.collider == null)
+        {
+            tangent = new Vector2(transform.localScale.x / 2, hit_left.distance - hit.distance);
+        }
+
+        //normalizing
+        if (tangent != Vector2.zero) {
+            float mag = Mathf.Sqrt(tangent.x * tangent.x + tangent.y * tangent.y);
+            Vector2 unit_tangent = new Vector2(tangent.x / mag, tangent.y / mag);
+            return unit_tangent;
+        }
+        return Vector2.zero;
+
+    }
+   
+    void StepOver(GameObject gameObj) {
+        //this will break if this object didn't start as a normal 1x1 square
+        //also I think could implement this by breaking the player down in to multiple colliders
+        //cannot step over if already on a free block...
+            if(!OnBlocks("Ground", "Deaths")) return;
+
+            Vector3 step = new Vector3(0, 0.13f);
+            float x_velocity = GetComponent<Rigidbody2D>().velocity.x;
+
+            Vector3 source = transform.position + new Vector3(0, -transform.localScale.y / 2);
+            Vector3 higher_source = transform.position + new Vector3(0, -transform.localScale.y / 2 + 0.1f);
+            
+            float extension = 0.5f;
+
+            RaycastHit2D freeBlocksLeft = Physics2D.Raycast(source, Vector2.left, extension, LayerMask.GetMask("Free Blocks"));
+            RaycastHit2D freeBlocksRight = Physics2D.Raycast(source, Vector2.right, extension, LayerMask.GetMask("Free Blocks"));
+            RaycastHit2D higherFreeBlocksLeft = Physics2D.Raycast(higher_source, Vector2.left, extension, LayerMask.GetMask("Free Blocks"));
+            RaycastHit2D higherFreeBlocksRight = Physics2D.Raycast(higher_source, Vector2.right, extension, LayerMask.GetMask("Free Blocks"));
+
+            if (freeBlocksLeft.collider != null && x_velocity < 0 || freeBlocksRight.collider != null && x_velocity > 0
+            || higherFreeBlocksLeft.collider != null && x_velocity < 0 || higherFreeBlocksRight.collider != null && x_velocity > 0) {
+                transform.position += step;
+            }
     }
 
     #endregion
