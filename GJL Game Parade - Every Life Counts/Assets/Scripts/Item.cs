@@ -23,16 +23,12 @@ public class Item : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = starting_velocity;
         }
 
-        GetComponent<ResetOnDeath>().Reset += ResetHandler;
+        GetComponent<ResetOnDeath>().Reset += AddStartVelocity;
     }
 
-    private void ResetHandler()
+    private void AddStartVelocity()
     {
-        if (!consumed)
-        {
-            transform.position = starting_position;
-        }
         GetComponent<Rigidbody2D>().velocity = starting_velocity;
     }
-    
+
 }

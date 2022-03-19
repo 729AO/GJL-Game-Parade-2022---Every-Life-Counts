@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
-using ObjectInterfaces;
 
 public delegate void DeathAction(int id, ItemType type, bool restart = false);
 public delegate void ButtonAction(int id);
@@ -17,7 +16,7 @@ public class Player : MonoBehaviour
     public readonly Vector2 jumpVelocity = new Vector2(0,9f);
     readonly Vector2 horizontalAcceleration = new Vector2(0.5f, 0);
     readonly float horizontalSpeedcap = 5f;
-    readonly float verticalSpeedcap = 15f;
+    readonly float verticalSpeedcap = 14f;
     Rigidbody2D ownRigidBody;
 
     int spawned_blocks = 0;
@@ -50,7 +49,7 @@ public class Player : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        if (Input.GetKey("space")) {
+        if (Input.GetKeyDown("space")) {
             TryJump();
         }
         CheckVertSpeed(verticalSpeedcap);
@@ -233,7 +232,7 @@ public class Player : MonoBehaviour
 
 #region items
 
-    void PickupItem(GameObject gameobj) {
+    void PickupItem(GameObject gameObj) {
 
         currentClothes = gameObj.GetComponent<Item>().type;
         gameObj.transform.position = new Vector3(-500,-500);
