@@ -5,23 +5,21 @@ using Enums;
 
 using ObjectInterfaces;
 
-public class Item : MonoBehaviour, IConsumable
+public class Item : MonoBehaviour
 {
     public ItemType type;
     public Vector2 starting_velocity { get; set; }
     public Vector2 starting_position { get; set; }
-    public GameObject consumableObject { get; set; }
-    public bool consumed { get; set; }
+    public bool isDestroyed = false;
 
-    private void Start()
+    private void Awake()
     {
-
-        starting_velocity = new Vector2(2, 0);
+        starting_velocity = Vector2.zero;
         starting_position = transform.position;
-        consumableObject = gameObject;
-
+        
         if (gameObject.name == "lvl1Item")
         {
+            starting_velocity = new Vector2(2,0);
             GetComponent<Rigidbody2D>().velocity = starting_velocity;
         }
 
@@ -36,5 +34,5 @@ public class Item : MonoBehaviour, IConsumable
         }
         GetComponent<Rigidbody2D>().velocity = starting_velocity;
     }
-
+    
 }
