@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: -7337316832263318241}
   - component: {fileID: 8132965806308634987}
   - component: {fileID: 4804654992720544906}
+  - component: {fileID: -3365367377884435305}
   m_Layer: 8
-  m_Name: Projectile
+  m_Name: 1.2s Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +115,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 15
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -135,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eefcf4e05ad9b44db2d3fd5dd355838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifespan: 1.2
 --- !u!58 &4804654992720544906
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -151,3 +153,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &-3365367377884435305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194224915793823098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ee8871f65c75d48ae96a533b25d906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingPosition: {x: 0, y: 0, z: 0}
+  startingRotation: {x: 0, y: 0, z: 0, w: 0}
+  startingVelocity: {x: 0, y: 0, z: 0}
+  startingAngularVelocity: 0

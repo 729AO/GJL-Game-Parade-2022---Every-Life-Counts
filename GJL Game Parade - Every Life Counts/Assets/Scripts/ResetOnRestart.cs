@@ -6,36 +6,19 @@ using System;
 
 using ObjectInterfaces;
 
+/// <summary> used to restart any objects that have restart rules different from death rules </summary>
 public class ResetOnRestart : MonoBehaviour
 {
     Player player;
-    List<IConsumable> consumables;
 
     void Start()
     {
-        consumables = new List<IConsumable>();
         player = GameObject.Find("Player").GetComponent<Player>();
         player.Restart += ExecuteRestart;
-        FindAllIConsumables();
-    }
-
-    private void FindAllIConsumables()
-    {
-        GameObject[] raw_consumables = GameObject.FindGameObjectsWithTag("Consumable");
-        
-        foreach (GameObject item in raw_consumables)
-        {
-            if(item.GetComponent<Item>() != null)
-            {
-                consumables.Add(item.GetComponent<Item>());
-            }
-        }
     }
 
     private void ExecuteRestart()
     {
-
-        player.Die(restart: true);
 
         if (gameObject.layer == 9)
         {
@@ -43,16 +26,18 @@ public class ResetOnRestart : MonoBehaviour
             Destroy(gameObject);
         }
 
-        ResetConsumables();
-
-    }
-
-    private void ResetConsumables()
-    {
-        foreach(IConsumable consumable in consumables)
-        {
-            consumable.consumableObject.GetComponent<Rigidbody2D>().velocity = consumable.starting_velocity;
-            consumable.consumableObject.GetComponent<Transform>().position = consumable.starting_position;
+        if (gameObject.layer == 10) {
+            if (GetComponent<Rigidbody2D>() == null || GetComponent<Item>() == null) Debug.Log("your item only partly exists");
+            GetComponent<Rigidbody2D>().velocity = GetComponent<Item>().starting_velocity;
+            transform.position = GetComponent<Item>().starting_position;
+            GetComponent<Item>().isDestroyed = false;
         }
+
+        if (gameObject.layer == 11) {
+            if (GetComponent<Button>() == null) Debug.Log("another case of partial existence...");
+            player.FullyUnpressButton(gameObject.GetComponent<Button>().buttonNum);
+        }
+
     }
+
 }

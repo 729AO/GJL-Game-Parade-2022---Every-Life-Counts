@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Enums;
 
+//directly copied all code from cannon, so make sure to copy any changes from there into here
 public class DeadCannon : DeadPlayer {
 
     public enum Direction

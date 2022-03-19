@@ -11,8 +11,8 @@ public class MovableBar : MonoBehaviour
     void Awake()
     {
         Player player = GameObject.Find("Player").GetComponent<Player>();
-        player.ButtonPressed += (int id, ItemType hopefullyNull) => Move(id);
-        player.ButtonUnpressed += (int id, ItemType hopefullyNull) => MoveBack(id);
+        player.ButtonPressed += Move;
+        player.ButtonUnpressed += MoveBack;
     }
 
     void Move(int id) {
