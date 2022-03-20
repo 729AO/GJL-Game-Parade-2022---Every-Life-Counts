@@ -828,7 +828,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Baddie
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5040408355181657778, guid: 8c02d3bc5753e7b4883c5166d0324726, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8c02d3bc5753e7b4883c5166d0324726, type: 3}
 --- !u!1 &1031178008
 GameObject:
@@ -1206,7 +1207,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 670237545618841887, guid: e0cde2525e5154b00afb3db9c3ac86ad, type: 3}
       propertyPath: m_Name
-      value: GameManager
+      value: Manager
       objectReference: {fileID: 0}
     - target: {fileID: 8381283849205568032, guid: e0cde2525e5154b00afb3db9c3ac86ad, type: 3}
       propertyPath: m_RootOrder

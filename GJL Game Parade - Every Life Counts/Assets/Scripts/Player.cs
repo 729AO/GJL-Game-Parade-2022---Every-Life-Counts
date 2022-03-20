@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     string rightKey = "d";
     string leftKey = "a";
 
+    public bool isPaused = false;
+
 #endregion
 
 #region inputs_and_basics
@@ -43,6 +45,9 @@ public class Player : MonoBehaviour
     {
         ownRigidBody = GetComponent<Rigidbody2D>();
         Restart += () => Die(restart: true);
+        Manager manager = GameObject.Find("Manager").GetComponent<Manager>();
+        manager.Pause += Pause;
+        manager.Unpause += Unpause;
     }
 
     // FixedUpdate makes the cube not jump good
@@ -50,12 +55,12 @@ public class Player : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        if (Input.GetKeyDown("space")) {
+        if (Input.GetKeyDown("space") && !isPaused) {
             TryJump();
         }
         CheckVertSpeed(verticalSpeedcap);
         
-        if (Input.GetKeyDown("backspace"))
+        if (Input.GetKeyDown("backspace") && !isPaused)
         {
             OnRestart();
         }
@@ -65,12 +70,12 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (Input.GetKey(rightKey))
+        if (Input.GetKey(rightKey) && !isPaused)
         {
             MoveRight();
         }
 
-        if (Input.GetKey(leftKey))
+        if (Input.GetKey(leftKey) && !isPaused)
         {
             MoveLeft();
         }  
@@ -302,7 +307,7 @@ public class Player : MonoBehaviour
         deathCounter++;
     }
 
-    protected virtual void OnRestart()
+    public virtual void OnRestart()
     {
         Restart?.Invoke();
         deathCounter = 0;
@@ -325,5 +330,17 @@ public class Player : MonoBehaviour
     }
 
 #endregion
+
+    void Pause() {
+
+        isPaused = true;
+
+    }
+
+    void Unpause() {
+
+        isPaused = false;
+
+    }
 
 }

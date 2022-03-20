@@ -7,7 +7,7 @@ public class DeadPlayer : MonoBehaviour
 {
 
     public int ID;
-    Player player;
+    protected Player player;
     public GameObject deadCannonBlock;
 
     void Awake() {   

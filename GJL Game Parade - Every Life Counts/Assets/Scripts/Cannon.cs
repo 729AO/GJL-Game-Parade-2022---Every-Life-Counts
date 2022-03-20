@@ -22,6 +22,7 @@ public class Cannon : MonoBehaviour
     public float projectile_speed;
     public int fixed_frames_per_fire;
     public GameObject projectile;
+    Player player;
 
     int frame = 0;
 
@@ -29,13 +30,13 @@ public class Cannon : MonoBehaviour
     void Start()
     {
         SetRotation();
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per set time interval
     void FixedUpdate()
     {
         TryFireProjectile();
-        frame += 1;
     }
 
     void SetRotation()
@@ -74,12 +75,15 @@ public class Cannon : MonoBehaviour
 
     void TryFireProjectile()
     {
-        if (fixed_frames_per_fire == 0) {
+        if (player.isPaused) {
+            return;
+        } else if (fixed_frames_per_fire == 0) {
             Debug.Log("set the frames_per_fire to something other than zero, probably also give them speed if you haven't you dingbat");
         } else if(frame % fixed_frames_per_fire == 0)
         {
             FireProjectile();
         }
+        frame += 1;
     }
 
     void FireProjectile()

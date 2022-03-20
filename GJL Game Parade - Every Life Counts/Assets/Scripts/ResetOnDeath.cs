@@ -41,6 +41,10 @@ public class ResetOnDeath : MonoBehaviour
     //since otherwise PlayerDied() doesn't have the right parameters to be encapsulated by a MyAction delegate...
     //but anonymous methods are nearly if not actually impossible to unsubscribe since there's no way to reference them
         player.Dead -= playerDiedOverload;
+        Manager manager = GameObject.Find("Manager").GetComponent<Manager>();
+        Pausable pausable = GetComponent<Pausable>();
+        manager.Pause -= pausable.Pause;
+        manager.Unpause -= pausable.Unpause;
 
     }
 
