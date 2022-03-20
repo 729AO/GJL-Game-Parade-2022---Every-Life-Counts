@@ -27,8 +27,10 @@ public class Manager : MonoBehaviour
     }
 
     public void PauseLevel() {
-        pausePopup.GetComponent<PausePopup>().Show();
-        Pause?.Invoke();
+        if (!GameObject.Find("Player").GetComponent<Player>().isPaused) {
+            pausePopup.GetComponent<PausePopup>().Show();
+            Pause?.Invoke();
+        }
     }
 
     public void UnpauseLevel() {
@@ -40,11 +42,12 @@ public class Manager : MonoBehaviour
         
         //this should be an instantiation but then I don't know how to make everything work with the canvas and all the children stuff
         popupWindow.GetComponent<LevelEndPopup>().Show();
+        Pause?.Invoke();//otherwise the pause button's still clickable and you can still move
+
 
     }
 
     public void LoadNextLevel() {
-        Debug.Log("the fuck?");
         Scene current_scene = SceneManager.GetActiveScene();
         string current_scene_name = current_scene.name;
         int current_number = levelOrder.IndexOf(current_scene_name);

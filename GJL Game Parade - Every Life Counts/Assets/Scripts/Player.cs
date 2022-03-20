@@ -307,10 +307,17 @@ public class Player : MonoBehaviour
         deathCounter++;
     }
 
-    public virtual void OnRestart()
+    public virtual void OnRestart(bool fromMenu = false)
     {
-        Restart?.Invoke();
-        deathCounter = 0;
+        if (fromMenu) {
+            Unpause();//not resetting velocities bc then for some reason restart doesn't change them back to zero
+        }
+        if (!isPaused) {
+            Debug.Log("we here?");
+            Restart?.Invoke();
+            deathCounter = 0;
+        }
+        
     }
 
 #endregion

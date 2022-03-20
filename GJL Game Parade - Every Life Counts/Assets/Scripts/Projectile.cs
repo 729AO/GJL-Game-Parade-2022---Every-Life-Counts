@@ -24,6 +24,7 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
+        if (player == null) player = GameObject.Find("Player").GetComponent<Player>();
 
         if ((Time.time - spawn_time) >= lifespan && !player.isPaused) { 
             SelfDestruct();

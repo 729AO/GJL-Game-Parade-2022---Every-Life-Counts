@@ -28,6 +28,7 @@ public class LevelEndPopup : AbstractPopup
     public override void Show() {
 
         transform.position = position;
+        Debug.Log(position);
 
         int deaths = GameObject.Find("Player").GetComponent<Player>().deathCounter;
         MedalInfo medalInfo = GetMedalInfo(deaths);
