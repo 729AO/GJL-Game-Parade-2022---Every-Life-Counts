@@ -52,4 +52,8 @@ public class Manager : MonoBehaviour
         SceneManager.LoadScene(levelOrder[current_number + 1]);
     }
 
+    public void LoadLevelSelect() {
+        SceneManager.LoadScene("LevelSelect");
+    }
+
 }
