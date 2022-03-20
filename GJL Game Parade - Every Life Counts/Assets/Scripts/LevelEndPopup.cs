@@ -22,11 +22,14 @@ public class LevelEndPopup : MonoBehaviour
     }
 
     public TMP_Text popupText;
-    readonly string[] text = {"Contratulations! You've completed the level in ", " attempts!\r\nYou've achieved a ", " Medal!", @"\r\nDie no more than ", "times for ", " Medal."};
+    readonly string[] text = {"Contratulations! You've completed the level in ", " deaths!\r\nYou've achieved a ", " Medal!", "\r\nDie no more than ", " times for ", " Medal."};
     public int silverDeathGoal;
     public int goldDeathGoal;
+    public Vector3 position;
 
-    void Awake() {
+    public void DisplayText() {
+
+        transform.position = position;
 
         int deaths = GameObject.Find("Player").GetComponent<Player>().deathCounter;
         MedalInfo medalInfo = GetMedalInfo(deaths);
@@ -40,8 +43,8 @@ public class LevelEndPopup : MonoBehaviour
 
     private MedalInfo GetMedalInfo(int deaths) {
 
-        if (deaths < goldDeathGoal) return new MedalInfo("gold", null, -1);
-        if (deaths < silverDeathGoal) return new MedalInfo("silver", "gold", goldDeathGoal);
+        if (deaths <= goldDeathGoal) return new MedalInfo("gold", null, -1);
+        if (deaths <= silverDeathGoal) return new MedalInfo("silver", "gold", goldDeathGoal);
         return new MedalInfo("bronze", "silver", silverDeathGoal);
 
     }

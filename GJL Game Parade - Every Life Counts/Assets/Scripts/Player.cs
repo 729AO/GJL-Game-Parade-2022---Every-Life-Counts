@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
         }
         if (gameObj.layer == 13)
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().EndLevel();
+            GameObject.Find("Manager").GetComponent<Manager>().EndLevel();
         }
 
     }

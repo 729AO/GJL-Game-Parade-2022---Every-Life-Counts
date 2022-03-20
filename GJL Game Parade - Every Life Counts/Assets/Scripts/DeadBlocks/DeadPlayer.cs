@@ -62,32 +62,6 @@ public class DeadPlayer : MonoBehaviour
         CheckIfOnButton();
     }
 
-
-
-    // //is there a way to just ask like if I'm in a trigger?
-    // void CheckIfOnButton() {
-
-    //     var left_side = transform.position - new Vector3(transform.localScale.x / 2, 0);
-    //     var right_side = transform.position + new Vector3(transform.localScale.x / 2, 0);
-
-    //     RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.4f, LayerMask.GetMask("Buttons"));
-    //     RaycastHit2D hit_left = Physics2D.Raycast(left_side, Vector2.down, 0.4f, LayerMask.GetMask("Buttons"));
-    //     RaycastHit2D hit_right = Physics2D.Raycast(right_side, Vector2.down, 0.4f, LayerMask.GetMask("Buttons"));
-
-    //     //if for some reason something is in the "Button" layer without a Button component there will be an error
-    //     if (hit.collider != null) {
-    //         player.PressButton(hit.collider.gameObject.GetComponent<Button>().buttonNum);
-
-    //     } else if (hit_left.collider != null) {
-    //         player.PressButton(hit_left.collider.gameObject.GetComponent<Button>().buttonNum);
-
-    //     } else if (hit_right.collider != null) {
-    //         player.PressButton(hit_right.collider.gameObject.GetComponent<Button>().buttonNum);
-    //     }
-
-    // }
-
-
     //this might be good to change in case the button is thinner than the block
     //also if we want to make some moving death-blocks, we can use OnTriggerStay2D (with an extra bool so it doesn't continuously unpress a button, but like so this is not an expensive calculation)
     //and OnTriggerExit/Enter2D and change the rigidbody to kinematic
