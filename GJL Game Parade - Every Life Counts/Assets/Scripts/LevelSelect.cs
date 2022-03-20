@@ -8,7 +8,7 @@ public class LevelSelect : MonoBehaviour
     
     public void OnButtonClick(int level)
     {
-        print(level);
+
         SceneManager.LoadScene(Manager.levelOrder[level - 1]);
 
     }
