@@ -41,6 +41,10 @@ public class ResetOnDeath : MonoBehaviour
     //since otherwise PlayerDied() doesn't have the right parameters to be encapsulated by a MyAction delegate...
     //but anonymous methods are nearly if not actually impossible to unsubscribe since there's no way to reference them
         player.Dead -= playerDiedOverload;
+        Manager manager = GameObject.Find("Manager").GetComponent<Manager>();
+        Pausable pausable = GetComponent<Pausable>();
+        manager.Pause -= pausable.Pause;
+        manager.Unpause -= pausable.Unpause;
 
     }
 
@@ -48,10 +52,9 @@ public class ResetOnDeath : MonoBehaviour
     {
         //try
         //{
-
             //if it's supposed to be 'destroyed' it won't get reset, even though it didn't get physically destroyed
             if (gameObject.layer == 10 && gameObject.GetComponent<Item>() != null && gameObject.GetComponent<Item>().isDestroyed) return;
-
+            
             transform.position = startingPosition;
             transform.rotation = startingRotation;
 
@@ -59,6 +62,7 @@ public class ResetOnDeath : MonoBehaviour
                 Rigidbody2D body = GetComponent<Rigidbody2D>();
                 body.velocity = startingVelocity;
                 body.angularVelocity = startingAngularVelocity;
+                if (gameObject.name.Equals("Player")) Debug.Log(startingVelocity + " " + body.velocity);
             }
 
             if (GetComponent<Projectile>() != null) {

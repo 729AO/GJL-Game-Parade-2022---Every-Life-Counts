@@ -4,27 +4,46 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 
+public delegate void PauseAction();
+
 public class Manager : MonoBehaviour
 {
 
     List<string> levelOrder;
     public GameObject popupWindow;
+    public GameObject pausePopup;
+    public PauseAction Pause;
+    public PauseAction Unpause;
 
     private void Start()
     {
         levelOrder = new List<string>() {
-            "movingAndEnemies",
+            "combinationLock",
             "theBasics",
             "staircase",
             "kaylaDrop",
-            "crazyPhysicsShit" 
+            "crazyPhysicsShit"
         };
+    }
+
+    public void PauseLevel() {
+        if (!GameObject.Find("Player").GetComponent<Player>().isPaused) {
+            pausePopup.GetComponent<PausePopup>().Show();
+            Pause?.Invoke();
+        }
+    }
+
+    public void UnpauseLevel() {
+        pausePopup.GetComponent<PausePopup>().Hide();
+        Unpause?.Invoke();
     }
 
     public void EndLevel() {
         
         //this should be an instantiation but then I don't know how to make everything work with the canvas and all the children stuff
-        popupWindow.GetComponent<LevelEndPopup>().DisplayText();
+        popupWindow.GetComponent<LevelEndPopup>().Show();
+        Pause?.Invoke();//otherwise the pause button's still clickable and you can still move
+
 
     }
 

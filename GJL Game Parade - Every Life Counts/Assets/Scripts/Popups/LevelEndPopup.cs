@@ -4,7 +4,7 @@ using UnityEngine;
 
 using TMPro;
 
-public class LevelEndPopup : MonoBehaviour
+public class LevelEndPopup : AbstractPopup
 {
 
     private struct MedalInfo {
@@ -21,15 +21,14 @@ public class LevelEndPopup : MonoBehaviour
 
     }
 
-    public TMP_Text popupText;
     readonly string[] text = {"Contratulations! You've completed the level in ", " deaths!\r\nYou've achieved a ", " Medal!", "\r\nDie no more than ", " times for ", " Medal."};
     public int silverDeathGoal;
     public int goldDeathGoal;
-    public Vector3 position;
 
-    public void DisplayText() {
+    public override void Show() {
 
         transform.position = position;
+        Debug.Log(position);
 
         int deaths = GameObject.Find("Player").GetComponent<Player>().deathCounter;
         MedalInfo medalInfo = GetMedalInfo(deaths);

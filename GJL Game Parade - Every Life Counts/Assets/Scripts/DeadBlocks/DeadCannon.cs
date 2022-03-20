@@ -4,6 +4,7 @@ using UnityEngine;
 using Enums;
 
 //directly copied all code from cannon, so make sure to copy any changes from there into here
+//might've been able to just put both deadplayer and cannon scripts onto the object
 public class DeadCannon : DeadPlayer {
 
     public enum Direction
@@ -36,7 +37,6 @@ public class DeadCannon : DeadPlayer {
     void FixedUpdate()
     {
         TryFireProjectile();
-        frame += 1;
     }
 
     void SetRotation()
@@ -75,12 +75,15 @@ public class DeadCannon : DeadPlayer {
 
     void TryFireProjectile()
     {
-        if (fixed_frames_per_fire == 0) {
+        if (player.isPaused) {
+            return;
+        } else if (fixed_frames_per_fire == 0) {
             Debug.Log("set the frames_per_fire to something other than zero, probably also give them speed if you haven't you dingbat");
         } else if(frame % fixed_frames_per_fire == 0)
         {
             FireProjectile();
         }
+        frame += 1;
     }
 
     void FireProjectile()
