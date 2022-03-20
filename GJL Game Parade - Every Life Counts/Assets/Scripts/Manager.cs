@@ -14,7 +14,8 @@ public class Manager : MonoBehaviour
             "theBasics",
             "staircase",
             "kaylaDrop",
-            "crazyPhysicsShit"
+            "crazyPhysicsShit",
+            "TitleScreen"
         };
 
     public GameObject popupWindow;

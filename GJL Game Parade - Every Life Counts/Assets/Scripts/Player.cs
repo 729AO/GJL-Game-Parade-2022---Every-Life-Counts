@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown("q"))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("LevelSelect");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScreen");
         }
     }
     
