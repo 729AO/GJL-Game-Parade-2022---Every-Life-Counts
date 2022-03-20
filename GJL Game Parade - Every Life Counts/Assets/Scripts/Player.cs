@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
 
     public event RestartAction Restart;
     int numObjsButtonIsPressedBy = 0;
+    public int deathCounter = 0;
 
     string rightKey = "d";
     string leftKey = "a";
@@ -298,11 +299,13 @@ public class Player : MonoBehaviour
     protected virtual void OnDeath(bool restart = false)
     {
         Dead?.Invoke(spawned_blocks - 1, currentClothes, restart);
+        deathCounter++;
     }
 
     protected virtual void OnRestart()
     {
         Restart?.Invoke();
+        deathCounter = 0;
     }
 
 #endregion
