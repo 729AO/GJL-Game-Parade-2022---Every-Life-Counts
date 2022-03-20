@@ -5,8 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/puzzle.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/staircase.unity
+    guid: 1feb20112a196204297194af2437a3a4
+  - enabled: 1
+    path: Assets/Scenes/kaylaDrop.unity
+    guid: be0b2808ba2be7c428c09234f3fa5144
+  - enabled: 1
+    path: Assets/Scenes/crazyPhysicsShit.unity
+    guid: e733f23fffa464d888c4f984ec23a99e
   m_configObjects: {}
-
