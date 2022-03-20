@@ -96,6 +96,10 @@ public class Player : MonoBehaviour
         {//this is to make you be able to step over short objects
             StepOver(gameObj);
         }
+        if (gameObj.layer == 13)
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().EndLevel();
+        }
 
     }
 
@@ -154,7 +158,7 @@ public class Player : MonoBehaviour
     void MoveRight()
     {
         Vector2 tangent = SlopeTangentVec(1, "Ground", "Deaths", "Free Blocks");
-        if (tangent != Vector2.zero) {Debug.Log("hi" + tangent); ownRigidBody.velocity += tangent * horizontalAcceleration;}
+        if (tangent != Vector2.zero) ownRigidBody.velocity += tangent * horizontalAcceleration;
         else ownRigidBody.velocity += new Vector2(horizontalAcceleration, 0);
 
         if(ownRigidBody.velocity.x >= horizontalSpeedcap)
