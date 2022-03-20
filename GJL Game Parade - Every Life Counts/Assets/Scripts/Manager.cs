@@ -13,6 +13,8 @@ public class Manager : MonoBehaviour
     private void Start()
     {
         levelOrder = new List<string>() {
+            "movingAndEnemies",
+            "theBasics",
             "staircase",
             "kaylaDrop",
             "crazyPhysicsShit" 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Enums;
 
@@ -16,6 +17,7 @@ public class Button : MonoBehaviour
         pressMotion = pressHeight * transform.up;
         Player player = GameObject.Find("Player").GetComponent<Player>();
         player.ButtonPressed += GetPressed;
+        Thread.Sleep(750);
         player.ButtonUnpressed += GetUnpressed;
     }
 
