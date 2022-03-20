@@ -64,6 +64,11 @@ public class Player : MonoBehaviour
         {
             OnRestart();
         }
+
+        if (Input.GetKeyDown("q"))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("LevelSelect");
+        }
     }
     
     // Otherwise movement would be tied to frame rate

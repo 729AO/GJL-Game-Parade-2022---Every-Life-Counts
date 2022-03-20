@@ -9,22 +9,19 @@ public delegate void PauseAction();
 public class Manager : MonoBehaviour
 {
 
-    List<string> levelOrder;
-    public GameObject popupWindow;
-    public GameObject pausePopup;
-    public PauseAction Pause;
-    public PauseAction Unpause;
-
-    private void Start()
-    {
-        levelOrder = new List<string>() {
-            "combinationLock",
+    static public List<string> levelOrder = new List<string>() {
+            "movingAndEnemies",
             "theBasics",
             "staircase",
             "kaylaDrop",
             "crazyPhysicsShit"
         };
-    }
+
+    public GameObject popupWindow;
+    public GameObject pausePopup;
+    public PauseAction Pause;
+    public PauseAction Unpause;
+
 
     public void PauseLevel() {
         Debug.Log("pausing");
