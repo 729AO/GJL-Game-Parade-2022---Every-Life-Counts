@@ -23,6 +23,28 @@ public class Manager : MonoBehaviour
     public PauseAction Pause;
     public PauseAction Unpause;
 
+    void Update() {
+
+        if (Input.GetKeyDown("escape")) {
+
+            string sceneName = SceneManager.GetActiveScene().name;
+
+            if (sceneName.Equals("TitleScreen")) {
+                QuitApplication();
+            } else if (sceneName.Equals("LevelSelect")) {
+                SceneManager.LoadScene("TitleScreen");
+            } else {
+                PauseLevel();
+            }
+
+        }
+
+    }
+
+    public void QuitApplication() {
+        Application.Quit();
+    }
+
 
     public void PauseLevel() {
         if (!GameObject.Find("Player").GetComponent<Player>().isPaused) {
