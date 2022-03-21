@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
+using System.Threading;
 
 public delegate void ResetAction();
 
@@ -14,10 +15,27 @@ public class ResetOnDeath : MonoBehaviour
     public float startingAngularVelocity;
     DeathAction playerDiedOverload;
     Player player;
+    bool setupComplete = false;
     
 
-    private void Start()
+    void Awake()//between awake and start? bc we need defaults set beforehand to read them
+    //but the projectiles have to have this subscription before start
+//ok splitting it up into awake and return works but what's a better strat?
+//I don't see how to reformulate my overall strategy either...?
     {
+        if (GetComponent<Projectile>() != null) {
+            player = GameObject.Find("Player").GetComponent<Player>();
+            playerDiedOverload = (int id, ItemType type, bool restart) => PlayerDied();
+            player.Dead += playerDiedOverload;
+            setupComplete = true;
+        }
+
+    }
+
+    void Update() {
+
+        if (setupComplete) return;
+
         startingPosition = transform.position;
         startingRotation = transform.rotation;
 
@@ -26,13 +44,16 @@ public class ResetOnDeath : MonoBehaviour
             startingVelocity = body.velocity;
             startingAngularVelocity = body.angularVelocity;
         }
-        
 
         player = GameObject.Find("Player").GetComponent<Player>();
         playerDiedOverload = (int id, ItemType type, bool restart) => PlayerDied();
         player.Dead += playerDiedOverload;
+        
+        setupComplete = true;
+
     }
 
+    //also unsubscribe from pause/unpause
     public void UnsubscribeFromDeath() {
     //no one cares but im gonna write it cause im excited
     //I couldn't say player.Dead += (int id, ItemType type) => PlayerDied();
@@ -62,16 +83,13 @@ public class ResetOnDeath : MonoBehaviour
                 Rigidbody2D body = GetComponent<Rigidbody2D>();
                 body.velocity = startingVelocity;
                 body.angularVelocity = startingAngularVelocity;
-                if (gameObject.name.Equals("Player")) Debug.Log(startingVelocity + " " + body.velocity);
             }
 
             if (GetComponent<Projectile>() != null) {
                 gameObject.GetComponent<Projectile>().SelfDestruct();
             }
-            
 
-
-            OnReset();//no understanding of why this is a thing
+            OnReset();//no understanding of why this is a thing, doesn't it invoke it a bunch of times?
         //}
         // catch (UnityEngine.MissingReferenceException)
         // { Debug.Log("ig it didn't reset"); }

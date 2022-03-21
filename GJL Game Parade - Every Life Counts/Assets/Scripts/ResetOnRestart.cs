@@ -34,8 +34,8 @@ public class ResetOnRestart : MonoBehaviour
         }
 
         if (gameObject.layer == 11) {
-            if (GetComponent<Button>() == null) Debug.Log("another case of partial existence...");
-            player.FullyUnpressButton(gameObject.GetComponent<Button>().buttonNum);
+            if (GetComponentInParent<Button>() == null) Debug.Log("another case of partial existence...");
+            player.FullyUnpressButton(gameObject.GetComponentInParent<Button>().buttonNum);
         }
 
     }

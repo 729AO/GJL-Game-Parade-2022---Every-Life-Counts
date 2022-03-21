@@ -27,7 +27,7 @@ public class Cannon : MonoBehaviour
     int frame = 0;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SetRotation();
         player = GameObject.Find("Player").GetComponent<Player>();

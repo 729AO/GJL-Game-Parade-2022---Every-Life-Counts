@@ -90,26 +90,29 @@ public class Player : MonoBehaviour
 #region triggers and button stuff
     void OnTriggerEnter2D(Collider2D collider)
     {
+        //these are now ordered bc otherwise it'll trigger things too many times--it might still do so but
+        //I put things that can only possibly happen once first since there's no way they get triggered twice
+        //and then I put things last that could theoretically be triggered multiple times but that would cause issues
         GameObject gameObj = collider.gameObject;
         if (gameObj.layer == 8)
         {
             Die();
         }
-        if (gameObj.layer == 10)
+        else if (gameObj.layer == 13)
         {
-            PickupItem(gameObj);           
+            GameObject.Find("Manager").GetComponent<Manager>().EndLevel();
         }
-        if (gameObj.layer == 11)
+        else if (gameObj.layer == 10)
         {
-            PressButton(gameObj.GetComponent<Button>().buttonNum);
+            PickupItem(gameObj);
         }
-        if (gameObj.layer == 12)
+        else if (gameObj.layer == 12)
         {//this is to make you be able to step over short objects
             StepOver(gameObj);
         }
-        if (gameObj.layer == 13)
+        else if (gameObj.layer == 11)
         {
-            GameObject.Find("Manager").GetComponent<Manager>().EndLevel();
+            PressButton(gameObj.GetComponentInParent<Button>().buttonNum);
         }
 
     }
@@ -119,7 +122,7 @@ public class Player : MonoBehaviour
         GameObject gameObj = collider.gameObject;
         if (gameObj.layer == 11)
         {
-            UnpressButton(gameObj.GetComponent<Button>().buttonNum);
+            UnpressButton(gameObj.GetComponentInParent<Button>().buttonNum);
         }
 
     }
@@ -130,16 +133,19 @@ public class Player : MonoBehaviour
             ButtonPressed?.Invoke(buttonNum);
         }
         numObjsButtonIsPressedBy++;
-
+        
     }
 
     public void UnpressButton(int buttonNum) {
 
-        if(numObjsButtonIsPressedBy <= 0) Debug.Log("whelp, you've unpressed the unpressed button, but if you just restarted that's ok");
+        if(numObjsButtonIsPressedBy <= 0) {
+            Debug.Log("whelp, you've unpressed the unpressed button, but if you just restarted that's ok");
+            return;
+        }
         if(numObjsButtonIsPressedBy == 1) {
             ButtonUnpressed?.Invoke(buttonNum);
-            numObjsButtonIsPressedBy--;
         }
+        numObjsButtonIsPressedBy--;
         
     }
 

@@ -10,14 +10,17 @@ public class Button : MonoBehaviour
     public int buttonNum;
     public float pressHeight = 0.2f;
     Vector3 pressMotion;
+    Transform visualTransform;
     
     void Awake()
     {
+        visualTransform = GetComponentInChildren<Transform>().Find("ButtonVisual");
+
         // uhh neither way is negative lmao
-        pressMotion = pressHeight * transform.up;
+        pressMotion = pressHeight * visualTransform.up;
         Player player = GameObject.Find("Player").GetComponent<Player>();
         player.ButtonPressed += GetPressed;
-        Thread.Sleep(750);
+        Thread.Sleep(750);//why??
         player.ButtonUnpressed += GetUnpressed;
     }
 
@@ -26,7 +29,7 @@ public class Button : MonoBehaviour
 
         
         if (buttonNum == id) {
-            transform.position -= pressMotion;
+            visualTransform.position -= pressMotion;
         }
 
     }
@@ -34,7 +37,7 @@ public class Button : MonoBehaviour
     void GetUnpressed(int id) {
         
         if (buttonNum == id) {
-            transform.position += pressMotion;
+            visualTransform.position += pressMotion;
         }
 
     }

@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
-
-    private void Start()
-    {
-
-    }
-
     public void OnButtonClick(int level)
     {
 

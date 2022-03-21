@@ -17,7 +17,7 @@ public class CanPressButton : MonoBehaviour
         GameObject gameObj = collider.gameObject;
         if (gameObj.layer == 11)
         {
-            player.PressButton(gameObj.GetComponent<Button>().buttonNum);
+            player.PressButton(gameObj.GetComponentInParent<Button>().buttonNum);
         }
 
     }
@@ -27,7 +27,7 @@ public class CanPressButton : MonoBehaviour
         GameObject gameObj = collider.gameObject;
         if (gameObj.layer == 11)
         {
-            player.UnpressButton(gameObj.GetComponent<Button>().buttonNum);
+            player.UnpressButton(gameObj.GetComponentInParent<Button>().buttonNum);
         }
 
     }

@@ -25,7 +25,6 @@ public class Manager : MonoBehaviour
 
 
     public void PauseLevel() {
-        Debug.Log("pausing");
         if (!GameObject.Find("Player").GetComponent<Player>().isPaused) {
             pausePopup.GetComponent<PausePopup>().Show();
             Pause?.Invoke();

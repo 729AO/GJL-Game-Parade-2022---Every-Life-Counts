@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7337316832263318241, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: -1060056176967575140, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
       propertyPath: m_Color.b
       value: 0.13725491
@@ -70,6 +74,10 @@ PrefabInstance:
     - target: {fileID: 3462590815126321029, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132965806308634987, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
+      propertyPath: death_delay
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9194224915793823098, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
       propertyPath: m_Name

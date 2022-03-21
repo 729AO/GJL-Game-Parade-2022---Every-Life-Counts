@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     public float spawn_time;
     public float lifespan;
     float hit_time = -1;
-    float death_delay = 0.05f;
+    public float death_delay;
     Player player;
 
     private void OnTriggerEnter2D(Collider2D collision)

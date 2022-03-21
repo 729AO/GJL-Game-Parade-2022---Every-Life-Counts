@@ -22,7 +22,7 @@ public class LevelEndPopup : AbstractPopup
 
     }
 
-    readonly string[] text = {"Contratulations! You've completed the level in ", " deaths!\r\nYou've achieved a ", " Medal!", "\r\nDie no more than ", " times for ", " Medal."};
+    readonly string[] text = {"Contratulations! You've completed the level in ", " deaths!\r\nYou've achieved a ", " medal!", "\r\nDie no more than ", " times for ", " Medal."};
     public int silverDeathGoal;
     public int goldDeathGoal;
 

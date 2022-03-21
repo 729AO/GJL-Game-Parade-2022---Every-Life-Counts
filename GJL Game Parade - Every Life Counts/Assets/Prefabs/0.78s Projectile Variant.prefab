@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: lifespan
       value: 0.78
       objectReference: {fileID: 0}
+    - target: {fileID: 8132965806308634987, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
+      propertyPath: death_delay
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 9194224915793823098, guid: 4699c0d71c4c6cc439791ff21d2a7ffa, type: 3}
       propertyPath: m_Name
       value: 0.78s Projectile Variant
