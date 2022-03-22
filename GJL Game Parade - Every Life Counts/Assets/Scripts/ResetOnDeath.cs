@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enums;
-using System.Threading;
-
 public delegate void ResetAction();
 
 public class ResetOnDeath : MonoBehaviour

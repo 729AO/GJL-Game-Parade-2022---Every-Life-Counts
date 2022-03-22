@@ -11,8 +11,10 @@ public class Projectile : MonoBehaviour
     public float death_delay;
     Player player;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
+        if (collider.gameObject.layer == 14 || collider.gameObject.layer == 15) return;
+        
         hit_time = Time.time;
     }
 

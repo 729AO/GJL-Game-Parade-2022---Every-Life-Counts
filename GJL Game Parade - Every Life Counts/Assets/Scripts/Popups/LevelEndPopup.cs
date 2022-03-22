@@ -22,7 +22,7 @@ public class LevelEndPopup : AbstractPopup
 
     }
 
-    readonly string[] text = {"Contratulations! You've completed the level in ", " deaths!\r\nYou've achieved a ", " medal!", "\r\nDie no more than ", " times for ", " Medal."};
+    readonly string[] text = {"Contratulations! You've completed the level in ", " death", "!\r\nYou've achieved a ", " medal!", "\r\nDie no more than ", " times for ", " Medal."};
     public int silverDeathGoal;
     public int goldDeathGoal;
 
@@ -33,17 +33,30 @@ public class LevelEndPopup : AbstractPopup
 
         int deaths = GameObject.Find("Player").GetComponent<Player>().deathCounter;
         MedalInfo medalInfo = GetMedalInfo(deaths);
-        popupText.text = text[0] + deaths + text[1] + medalInfo.medal + text[2];
+
+        popupText.text = text[0] + deaths + text[1];
+        if (deaths != 1) popupText.text += "s";
+
+        //if you cheese the level
+        if (medalInfo.nextDeathGoal == -2) {popupText.text += "!\r\nYou've cheesed the level!\r\nImpressive!"; return;}
+
+        //back to normal
+        popupText.text += text[2] + medalInfo.medal + text[3];
 
         if (medalInfo.nextMedal != null) {
-            popupText.text += text[3] + medalInfo.nextDeathGoal + text[4] + medalInfo.nextMedal + text[5];
+            popupText.text += text[4] + medalInfo.nextDeathGoal + text[5] + medalInfo.nextMedal + text[6];
         }
+
+
 
     }
 
     private MedalInfo GetMedalInfo(int deaths) {
 
-        if (deaths <= goldDeathGoal) {
+        if (deaths < goldDeathGoal) {
+            SaveMedal("cheese");
+            return new MedalInfo("cheese", null, -2); }
+        if (deaths == goldDeathGoal) {
             SaveMedal("gold");
             return new MedalInfo("gold", null, -1); }
         if (deaths <= silverDeathGoal) {

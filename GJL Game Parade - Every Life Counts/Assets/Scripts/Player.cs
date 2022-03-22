@@ -30,9 +30,6 @@ public class Player : MonoBehaviour
     int numObjsButtonIsPressedBy = 0;
     public int deathCounter = 0;
 
-    string rightKey = "d";
-    string leftKey = "a";
-
     public bool isPaused = false;
 
 #endregion
@@ -55,7 +52,7 @@ public class Player : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        if (Input.GetKeyDown("space") && !isPaused) {
+        if ((Input.GetKeyDown("space") || Input.GetKey("w") || Input.GetKey("up")) && !isPaused) {
             TryJump();
         }
         CheckVertSpeed(verticalSpeedcap);
@@ -75,12 +72,12 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (Input.GetKey(rightKey) && !isPaused)
+        if ((Input.GetKey("d") || Input.GetKey("right")) && !isPaused)
         {
             MoveRight();
         }
 
-        if (Input.GetKey(leftKey) && !isPaused)
+        if ((Input.GetKey("a") || Input.GetKey("left")) && !isPaused)
         {
             MoveLeft();
         }  
@@ -93,6 +90,7 @@ public class Player : MonoBehaviour
         //these are now ordered bc otherwise it'll trigger things too many times--it might still do so but
         //I put things that can only possibly happen once first since there's no way they get triggered twice
         //and then I put things last that could theoretically be triggered multiple times but that would cause issues
+    //ok this didn't change anything but i'm leaving it like this cause...
         GameObject gameObj = collider.gameObject;
         if (gameObj.layer == 8)
         {
@@ -109,6 +107,14 @@ public class Player : MonoBehaviour
         else if (gameObj.layer == 12)
         {//this is to make you be able to step over short objects
             StepOver(gameObj);
+        }
+        else if (gameObj.layer == 14)
+        {
+            StartCoroutine(gameObj.GetComponentInParent<TextTrigger>().FadeIn());
+        }
+        else if (gameObj.layer == 15)
+        {
+            StartCoroutine(gameObj.GetComponentInParent<TextTrigger>().FadeOut());
         }
         else if (gameObj.layer == 11)
         {
@@ -133,7 +139,7 @@ public class Player : MonoBehaviour
             ButtonPressed?.Invoke(buttonNum);
         }
         numObjsButtonIsPressedBy++;
-        
+
     }
 
     public void UnpressButton(int buttonNum) {
@@ -318,11 +324,11 @@ public class Player : MonoBehaviour
         deathCounter++;
     }
 
-    public virtual void OnRestart(bool fromMenu = false)
+    public virtual void OnRestart()
     {
-        if (fromMenu) {
-            Unpause();//not resetting velocities bc then for some reason restart doesn't change them back to zero
-        }
+        // if (fromMenu) {
+        //     Unpause();//not resetting velocities bc then for some reason restart doesn't change them back to zero
+        // }
         if (!isPaused) {
             Restart?.Invoke();
             deathCounter = 0;

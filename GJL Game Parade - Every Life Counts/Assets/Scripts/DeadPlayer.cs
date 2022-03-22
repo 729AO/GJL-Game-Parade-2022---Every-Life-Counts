@@ -9,21 +9,24 @@ public class DeadPlayer : MonoBehaviour
     public int ID;
     protected Player player;
     public GameObject deadCannonBlock;
-    public DeathAction OnPlayerDeath;
 
     void Awake() {   
         
-        OnPlayerDeath = (int id, ItemType type, bool restart) => {
-            if (!restart) {
-                SetParameters(type, id);
-                CheckIfOnButton();
-                player.Dead -= OnPlayerDeath;
-            }
-        };
-        
-        player = GameObject.Find("Player").GetComponent<Player>();
-        player.Dead += OnPlayerDeath;
-        if (GetComponent<Cannon>() == null) transform.rotation = Quaternion.Euler(0, 0, 0);
+        if (GetComponent<Cannon>() == null) {
+            player = GameObject.Find("Player").GetComponent<Player>();
+            player.Dead += OnPlayerDeath;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        } else {
+            CheckIfOnButton();//parameters don't need to be set for DeadCannon
+        }
+    }
+
+    void OnPlayerDeath(int id, ItemType type, bool restart) {
+        if (!restart) {
+            SetParameters(type, id);
+            CheckIfOnButton();
+            player.Dead -= OnPlayerDeath;
+        }
     }
 
     void SetParameters(ItemType type, int target_id) {
@@ -57,8 +60,10 @@ public class DeadPlayer : MonoBehaviour
                 break;
             case ItemType.cannon:
                 if(gameObject.GetComponent<Cannon>() == null) {
-                    Instantiate(deadCannonBlock, transform.position, deadCannonBlock.transform.rotation);
+                    GameObject cannonBlock = Instantiate(deadCannonBlock, transform.position, deadCannonBlock.transform.rotation);
                     player.Dead -= OnPlayerDeath;
+                    // player.Restart -= GetComponent<ResetOnRestart>().ExecuteRestart;
+                        //^^doesn't need to unsubscribe like that because awake runs before start so it hasn't been subscribed
                     Destroy(gameObject);
                 }
                 break;

@@ -17,12 +17,18 @@ public class ResetOnRestart : MonoBehaviour
         player.Restart += ExecuteRestart;
     }
 
-    private void ExecuteRestart()
+    public void ExecuteRestart()
     {
 
         if (gameObject.layer == 9)
         {
             player.Restart -= ExecuteRestart;
+            if (GetComponent<Pausable>() != null) {
+                Manager manager = GameObject.Find("Manager").GetComponent<Manager>();
+                Pausable pausable = GetComponent<Pausable>();
+                manager.Pause -= pausable.Pause;
+                manager.Unpause -= pausable.Unpause;
+            }
             Destroy(gameObject);
         }
 
